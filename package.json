@@ -1,0 +1,64 @@
+{
+  "name": "example-nodejs-template",
+  "version": "1.0.0",
+  "description": "",
+  "main": "ecosystem.config.js",
+  "scripts": {
+    "test": "mocha ./test/e2e/index.ts",
+    "build": "tsc",
+    "dev": "nodemon ./index.ts start",
+    "start": "nodemon ./index.ts start",
+    "startService": "npm run build && pm2 start",
+    "startOrReloadService": "npm run build && pm2 startOrReload ecosystem.config.js",
+    "stopService": "pm2 stop all && npm run deleteService",
+    "deleteService": "npm run pm2ClearLog && pm2 delete server && pm2 delete match && pm2 delete message && pm2 delete campaign && pm2 delete chart  && pm2 delete audience && pm2 delete googleAds",
+    "restartService": "npm run stopService && npm run startService",
+    "startServer": "nodemon ./server.ts startServer",
+    "pm2ClearLog": "pm2 flush",
+    "pm2LimitLog": "npm run pm2ClearLog && pm2 install pm2-logrotate && pm2 set pm2-logrotate:retain 10 && pm2 set pm2-logrotate:compress false && pm2 set pm2-logrotate:dateFormat YYYY-MM-DD_HH-mm-ss && pm2 set pm2-logrotate:max_size 10M && pm2 set pm2-logrotate:rotateInterval 0 0 * * * && pm2 set pm2-logrotate:rotateModule true && pm2 set pm2-logrotate:workerInterval 30",
+    "migrate": "ts-node server.ts migrate && npx sequelize-cli db:migrate"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jaenelleisidro/example-nodejs-template.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jaenelleisidro/example-nodejs-template/issues"
+  },
+  "homepage": "https://github.com/jaenelleisidro/example-nodejs-template#readme",
+  "dependencies": {
+    "@types/express": "^4.17.13",
+    "@types/express-serve-static-core": "^4.17.24",
+    "axios": "^0.19.2",
+    "bcrypt": "^4.0.1",
+    "chromedriver": "^96.0.0",
+    "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "express-fileupload": "^1.1.6",
+    "faker": "^4.1.0",
+    "handlebars": "^4.7.7",
+    "moment": "^2.24.0",
+    "mongodb": "^3.5.5",
+    "node-cron": "^2.0.3",
+    "nodemailer": "^6.4.5",
+    "pdf-creator-node": "^2.2.4",
+    "selenium-webdriver": "^4.1.0",
+    "sequelize": "^5.21.5",
+    "xml-js": "^1.6.11"
+  },
+  "devDependencies": {
+    "@types/chai": "^4.3.0",
+    "@types/mocha": "^9.0.0",
+    "@types/node": "^17.0.10",
+    "chai": "^4.3.4",
+    "jsdoc": "^3.6.6",
+    "mocha": "^9.1.4",
+    "sequelize-erd": "^1.3.0",
+    "ts-node": "^9.1.1",
+    "typescript": "^3.8.3"
+  }
+}
